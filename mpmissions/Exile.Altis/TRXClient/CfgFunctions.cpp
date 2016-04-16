@@ -21,6 +21,7 @@ class TRX {
 	file = "TRXClient\Functions";
 		class canUpgrade {};
 		class getRecipe {};
+		class getDisplayName {};
 		class itemsInCargo {};
 		class startCraft {};
 		class serverDispatch {};

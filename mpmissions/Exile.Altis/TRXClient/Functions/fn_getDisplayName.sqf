@@ -1,5 +1,5 @@
 /*  
-	fn_canUpgrade.sqf
+	fn_getDisplayName.sqf
 
 	Copyright 2016 Jan Babor
 
@@ -15,8 +15,15 @@
 	See the License for the specific language governing permissions and
 	limitations under the License.
 */
+params ["_item","_cfg"];
 
-if(!local _this)exitWith{false};
-if!(((locked ExileClientInteractionObject) isEqualTo 0) && ((locked ExileClientInteractionObject) != 1))exitWith{false};
+_cfg = "";
+{
+	if(isClass (configFile >> _x >> _item))then{
+		_cfg = getText (configFile >> _x >> _item >> "displayName")
+	};
+}forEach ["cfgVehicles","cfgWeapons","cfgMagazines"];
 
-(count getArray(missionConfigFile >> "CfgExileArsenal" >> (typeOf _this) >> "recipe") > 0 && count getText(missionConfigFile >> "CfgExileArsenal" >> (typeOf _this) >> "upgradeTo") > 0)
+_cfg = if(count _cfg > 0) then {_cfg} else {_item};
+
+_cfg

@@ -44,7 +44,15 @@ catch
 		case 1;
 		case 2: {
 			diag_log format["TRXClient Error - startCraft - %1",_exception]; 
-			hint "Show message of recipe";
+			_upgradeToClass = getText(missionConfigFile >> "CfgExileArsenal" >> (typeOf _vehObj) >> "upgradeTo");
+			_upgradeToDisplayName = getText(ConfigFile >> "CfgVehicles" >> _upgradeToClass >> "displayName");
+			_vehObjDisplayName = getText(ConfigFile >> "CfgVehicles" >> (typeOf _vehObj) >> "displayName");
+			_recipeMsg = "";
+			{
+				_amount = if(count _x > 1)then{_x select 1}else{1};
+				_recipeMsg = _recipeMsg + format["%1x : %2\n",_amount, (_x select 0)];
+			}forEach _recipe;
+			cutText [format["To upgrade the %1 to a %2 you need;\n%3",_vehObjDisplayName,_upgradeToDisplayName,_recipeMsg],"PLAIN",2];
 		};
 		case 3: { hint "Now it went really south!! :| Contact Jan" };
 	};

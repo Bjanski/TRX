@@ -17,8 +17,6 @@
 */
 
 /*
-save vehObj to db, 
-despawn _veobj
 manipulate db entry
 spawn in new vehicle. 
 */
@@ -26,3 +24,26 @@ spawn in new vehicle.
 params ["_objNetId","_objVeh"];
 
 _objVeh = objectFromNetId _objNetId;
+
+if!(_objVeh getVariable ["ExileIsPersistent", false])exitWith{diag_log "trying to upgrade a non-persistant vehicle"};
+
+_newClass = getText(missionConfigFile >> "CfgExileArsenal" >> (typeOf _objVeh) >> "upgradeTo");
+
+_objVeh call ExileServer_object_vehicle_database_update;
+_objId = _objVeh getVariable ["ExileDatabaseID", -1];
+
+_objVeh call ExileServer_system_vehicleSaveQueue_removeVehicle;
+_objVeh call ExileServer_system_simulationMonitor_removeVehicle;
+deleteVehicle _objVeh;
+
+[_objId,_newClass] spawn {
+	params ["_objId","_newClass"];
+	
+	UISleep 2;
+	format ["updateVehicleClass:%1:%2",_newClass,_objId] call ExileServer_system_database_query_fireAndForget;	
+	
+	UISleep 2;
+	_objId call ExileServer_object_vehicle_database_load;	
+};
+
+true
