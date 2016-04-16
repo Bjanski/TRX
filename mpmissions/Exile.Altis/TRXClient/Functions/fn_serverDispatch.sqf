@@ -1,5 +1,5 @@
 /*  
-	CfgFunctions.cpp
+	fn_serverDispatch.sqf
 
 	Copyright 2016 Jan Babor
 
@@ -16,13 +16,6 @@
 	limitations under the License.
 */
 
-class TRX {
-	class main {
-	file = "TRXClient\Functions";
-		class canUpgrade {};
-		class getRecipe {};
-		class itemsInCargo {};
-		class startCraft {};
-		class serverDispatch {};
-	};
-};
+_this remoteExec ["TRXServer_fnc_clientRequest",2];
+
+true
