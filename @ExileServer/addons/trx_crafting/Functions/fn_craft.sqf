@@ -21,13 +21,11 @@ manipulate db entry
 spawn in new vehicle. 
 */
 
-params ["_objNetId","_objVeh"];
+params ["_objNetId","_upgTo","_objVeh","_objId"];
 
 _objVeh = objectFromNetId _objNetId;
 
 if!(_objVeh getVariable ["ExileIsPersistent", false])exitWith{diag_log "trying to upgrade a non-persistant vehicle"};
-
-_newClass = getText(missionConfigFile >> "CfgExileArsenal" >> (typeOf _objVeh) >> "upgradeTo");
 
 _objVeh call ExileServer_object_vehicle_database_update;
 _objId = _objVeh getVariable ["ExileDatabaseID", -1];
@@ -36,7 +34,7 @@ _objVeh call ExileServer_system_vehicleSaveQueue_removeVehicle;
 _objVeh call ExileServer_system_simulationMonitor_removeVehicle;
 deleteVehicle _objVeh;
 
-[_objId,_newClass] spawn {
+[_objId,_upgTo] spawn {
 	params ["_objId","_newClass"];
 	
 	UISleep 2;

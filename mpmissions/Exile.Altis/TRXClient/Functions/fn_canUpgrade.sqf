@@ -19,4 +19,4 @@
 if(!local _this)exitWith{false};
 if!(((locked ExileClientInteractionObject) isEqualTo 0) && ((locked ExileClientInteractionObject) != 1))exitWith{false};
 
-(count getArray(missionConfigFile >> "CfgExileArsenal" >> (typeOf _this) >> "recipe") > 0 && count getText(missionConfigFile >> "CfgExileArsenal" >> (typeOf _this) >> "upgradeTo") > 0)
+(count getArray(missionConfigFile >> "CfgExileArsenal" >> (typeOf _this) >> "upgradeTo") > 0)

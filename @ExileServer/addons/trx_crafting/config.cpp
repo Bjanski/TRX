@@ -29,6 +29,7 @@ class CfgFunctions {
 		file = "trx_crafting\Functions";
 			class clientRequest {};
 			class craft {};
+			class saveVehicle {};
 		};
 	};
 };
@@ -37,6 +38,10 @@ class CfgNetworkMessages
 {
 	class Craft
 	{
-		parameters[] = {"STRING"};
+		parameters[] = {"STRING","STRING"};
+	};
+	class SaveVehicle
+	{
+		parameters[] = {"STRING","STRING"};
 	};
 };
